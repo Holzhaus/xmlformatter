@@ -85,11 +85,13 @@ class Formatter:
         fh = sys.stdout
         if strg is not None:
             if path is not None:
-                open(path, "w+b").write(strg)
+                fp = open(path, "w+b")
             elif sys.version_info > (3, 0):
-                fh.buffer.write(strg)
+                fp = fh.buffer
             else:
-                fh.write(strg)
+                fp = fh
+            fp.write(strg)
+            fp.write(b"\n")
 
     def format_string(self, xmldoc=""):
         """ Format a XML document given by xmldoc """
